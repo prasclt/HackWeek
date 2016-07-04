@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_logo">75dp</dimen>
+    <dimen name="margin_top_progress_bar">100dp</dimen>
+    <dimen name="width_progress_bar">300dp</dimen>
+    <dimen name="height_progress_bar">10dp</dimen>
 </resources>
