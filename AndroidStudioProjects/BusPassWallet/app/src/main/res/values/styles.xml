@@ -17,4 +17,20 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="EditTextStyle">
+        <item name="android:layout_marginTop">@dimen/margin_edit_text_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/margin_edit_text_horizontal</item>
+        <item name="android:layout_marginRight">@dimen/margin_edit_text_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_edit_text_vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="ButtonStype">
+        <item name="android:layout_marginTop">@dimen/margin_button_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/margin_button_horizontal</item>
+        <item name="android:layout_marginRight">@dimen/margin_button_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_button_vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+    </style>
 </resources>

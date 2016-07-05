@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
+import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO load login fragment
+                Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, new LoginFragment(), null);
             }
         }, InitialLoadingFragment.DURATION_IN_MILLIS);
     }
