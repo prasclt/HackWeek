@@ -1,20 +1,20 @@
 package com.microsoft.hack.buspasswallet;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
-import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
+import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentLoaderActivity {
 
     private FragmentManager mFragmentManager;
+    private Controller mController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mFragmentManager = getSupportFragmentManager();
-
-        displayInitialFragments();
+        mController = new Controller(this);
     }
 
     @Override
@@ -50,15 +49,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void displayInitialFragments() {
-        Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, new InitialLoadingFragment(), null);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, new LoginFragment(), null);
-            }
-        }, InitialLoadingFragment.DURATION_IN_MILLIS);
+    @Override
+    public void loadFragment(Fragment fragment) {
+        Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, fragment, null);
     }
 
     public interface LaunchableFragment {

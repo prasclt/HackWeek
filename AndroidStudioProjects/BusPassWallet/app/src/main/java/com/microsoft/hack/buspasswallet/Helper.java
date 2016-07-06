@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.microsoft.hack.buspasswallet.models.User;
+
 /**
  * Created by prmeno on 7/5/2016.
  */
@@ -15,5 +17,9 @@ public final class Helper {
             fragment.setArguments(bundle);
         }
         fragmentManager.beginTransaction().add(containerID, fragment).commit();
+    }
+
+    public static User dummyUser() {
+        return new User("Pras", 27);
     }
 }
