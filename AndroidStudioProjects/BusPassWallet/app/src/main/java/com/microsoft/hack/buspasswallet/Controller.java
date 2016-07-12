@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.microsoft.hack.buspasswallet.fragments.HomeScreenFragment;
 import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
 import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
 import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
@@ -24,8 +25,7 @@ public class Controller {
     }
 
     public void onLoginSuccess(User user) {
-        //TODO - load next screen
-        Toast.makeText((Activity) mFragmentLoaderActivity, user.getName(), Toast.LENGTH_LONG).show();
+        mFragmentLoaderActivity.loadFragment(HomeScreenFragment.instantiate(this));
     }
 
     private void displayInitialFragments() {
@@ -37,5 +37,9 @@ public class Controller {
                 mFragmentLoaderActivity.loadFragment(LoginFragment.instantiate(Controller.this));
             }
         }, InitialLoadingFragment.DURATION_IN_MILLIS);
+    }
+
+    public void purchasePass() {
+        Toast.makeText((Activity) mFragmentLoaderActivity, "Lets buy a pass", Toast.LENGTH_LONG).show();
     }
 }

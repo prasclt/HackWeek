@@ -6,4 +6,5 @@
     <string name="edit_text_hint_password">Password</string>
     <string name="button_login_text">Login</string>
     <string name="text_view_register">Register</string>
+    <string name="header_your_passes">Your Passes</string>
 </resources>
