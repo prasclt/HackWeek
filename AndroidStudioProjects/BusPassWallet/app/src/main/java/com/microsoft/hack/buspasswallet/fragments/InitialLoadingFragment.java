@@ -25,20 +25,6 @@ public class InitialLoadingFragment extends Fragment {
     private AppCompatActivity mActivity;
     private ContentLoadingProgressBar mProgressBar;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            mActivity =((AppCompatActivity) context);
-        } catch (ClassCastException ex) {
-            Log.e(InitialLoadingFragment.class.getSimpleName(), ex.getMessage());
-            return;
-        }
-
-        mActivity.getSupportActionBar().hide();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,14 +40,4 @@ public class InitialLoadingFragment extends Fragment {
 
         mProgressBar.setIndeterminate(true);
     }
-
-    @Override
-    public void onDetach() {
-        if(mActivity == null){
-            return;
-        }
-        mActivity.getSupportActionBar().show();
-        super.onDetach();
-    }
-
 }

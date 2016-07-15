@@ -17,13 +17,8 @@
             android:src="@drawable/bmtc_logo" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/grey"
-            android:gravity="center_horizontal"
-            android:text="@string/header_your_passes"
-            android:textSize="22sp" />
+            style="@style/HeaderStyle"
+            android:text="@string/header_your_passes" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewPasses"

@@ -12,6 +12,10 @@
         android:layout_margin="@dimen/margin_logo_small"
         android:src="@drawable/bmtc_logo" />
 
+    <TextView
+        style="@style/HeaderStyle"
+        android:text="@string/heading_purchase_screen" />
+
     <RadioGroup
         android:id="@+id/radioGroupPasses"
         android:layout_width="match_parent"
@@ -19,24 +23,28 @@
         android:layout_margin="10dp">
 
         <RadioButton
+            android:id="@+id/radioButtonAcMonthly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="AC Monthly - Rs 1000" />
 
         <RadioButton
+            android:id="@+id/radioButtonNormalMonthly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Normal Monthly - Rs 700" />
 
         <RadioButton
+            android:id="@+id/radioButtonAcDaily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="AC Day - Rs 100" />
 
         <RadioButton
+            android:id="@+id/radioButtonNormalDaily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
