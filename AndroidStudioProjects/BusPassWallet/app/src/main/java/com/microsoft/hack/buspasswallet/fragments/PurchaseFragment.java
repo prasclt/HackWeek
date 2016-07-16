@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.R;
+import com.microsoft.hack.buspasswallet.models.Pass;
 
 /**
  * Created by prmeno on 7/15/2016.
@@ -49,8 +50,23 @@ public class PurchaseFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mController.purchaseSuccess();
+        mController.purchaseSuccess(passType(mRadioGroupPassType.getCheckedRadioButtonId()));
         return true;
+    }
+
+    private int passType(int radioButtonId) {
+        switch (radioButtonId) {
+            case R.id.radioButtonAcMonthly:
+                return Pass.AC_MONTHLY;
+            case R.id.radioButtonNormalMonthly:
+                return Pass.NORMAL_MONTHLY;
+            case R.id.radioButtonAcDaily:
+                return Pass.AC_DAILY;
+            case R.id.radioButtonNormalDaily:
+                return Pass.NORMAL_DAILY;
+        }
+
+        return Pass.AC_MONTHLY;
     }
 
     public static PurchaseFragment instantiate(Controller controller) {

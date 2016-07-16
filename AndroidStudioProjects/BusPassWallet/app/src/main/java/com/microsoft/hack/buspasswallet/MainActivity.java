@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements FragmentLoaderAct
     }
 
     @Override
-    public void loadFragment(Fragment fragment) {
-        Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, fragment, null);
+    public void loadFragment(Fragment fragment, boolean addPreviousFragmentToBackstack) {
+        Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, fragment, null, addPreviousFragmentToBackstack);
     }
 
     public interface LaunchableFragment {

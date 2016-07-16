@@ -7,5 +7,5 @@ import android.support.v4.app.Fragment;
  */
 public interface FragmentLoaderActivity {
 
-    void loadFragment(Fragment fragment);
+    void loadFragment(Fragment fragment, boolean addPreviousFragmentToBackstack);
 }

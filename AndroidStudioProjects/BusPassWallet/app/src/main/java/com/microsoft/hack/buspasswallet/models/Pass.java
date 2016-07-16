@@ -58,4 +58,9 @@ public class Pass {
 
         validTo = c.getTime();
     }
+
+    public static Pass generatePassFromNow(User user, int passType) {
+        Calendar c = Calendar.getInstance();
+        return new Pass(c.getTime(), user, passType);
+    }
 }

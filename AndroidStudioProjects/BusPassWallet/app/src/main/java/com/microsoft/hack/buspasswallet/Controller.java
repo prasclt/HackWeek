@@ -12,6 +12,7 @@ import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
 import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
 import com.microsoft.hack.buspasswallet.fragments.PurchaseFragment;
 import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
+import com.microsoft.hack.buspasswallet.models.Pass;
 import com.microsoft.hack.buspasswallet.models.User;
 
 /**
@@ -20,6 +21,7 @@ import com.microsoft.hack.buspasswallet.models.User;
 public class Controller {
 
     private FragmentLoaderActivity mFragmentLoaderActivity;
+    private User loggedInUser;
 
     public Controller(FragmentLoaderActivity fragmentLoaderActivity) {
         this.mFragmentLoaderActivity = fragmentLoaderActivity;
@@ -27,27 +29,35 @@ public class Controller {
     }
 
     public void onLoginSuccess(User user) {
-        mFragmentLoaderActivity.loadFragment(HomeScreenFragment.instantiate(this));
+        loggedInUser = user;
+        mFragmentLoaderActivity.loadFragment(HomeScreenFragment.instantiate(this), false);
     }
 
     private void displayInitialFragments() {
         ((AppCompatActivity) mFragmentLoaderActivity).getSupportActionBar().hide();
-        mFragmentLoaderActivity.loadFragment(new InitialLoadingFragment());
+        mFragmentLoaderActivity.loadFragment(new InitialLoadingFragment(), false);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ((AppCompatActivity) mFragmentLoaderActivity).getSupportActionBar().show();
-                mFragmentLoaderActivity.loadFragment(LoginFragment.instantiate(Controller.this));
+                mFragmentLoaderActivity.loadFragment(LoginFragment.instantiate(Controller.this), false);
             }
         }, InitialLoadingFragment.DURATION_IN_MILLIS);
     }
 
     public void purchasePass() {
-        mFragmentLoaderActivity.loadFragment(PurchaseFragment.instantiate(Controller.this));
+        mFragmentLoaderActivity.loadFragment(PurchaseFragment.instantiate(Controller.this), true);
     }
 
-    public void purchaseSuccess() {
-        ((AppCompatActivity) mFragmentLoaderActivity).onBackPressed();
+    public void purchaseSuccess(int passType) {
+        //TODO pras insert to DB
+        Pass newPass = Pass.generatePassFromNow(loggedInUser, passType);
+        Toast.makeText((Activity) mFragmentLoaderActivity, "Pass valid to : " + newPass.getValidTo().toString(), Toast.LENGTH_LONG).show();
+        ((Activity) mFragmentLoaderActivity).onBackPressed();
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
     }
 }
