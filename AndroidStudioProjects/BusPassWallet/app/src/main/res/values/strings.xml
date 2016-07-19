@@ -9,4 +9,5 @@
     <string name="header_your_passes">Your Active Passes</string>
     <string name="heading_purchase_screen">Select a pass</string>
     <string name="menu_item_buy">Buy</string>
+    <string name="title_homescreen">My Passes</string>
 </resources>

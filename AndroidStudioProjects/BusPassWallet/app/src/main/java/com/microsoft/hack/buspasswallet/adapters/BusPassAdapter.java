@@ -10,9 +10,10 @@ import android.widget.TextView;
 import com.microsoft.hack.buspasswallet.DBHelper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
-import com.microsoft.hack.buspasswallet.views.PassListItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,10 +22,19 @@ import java.util.List;
 
 public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassViewHolder> {
 
-    List<Pass> passes;
+    public static final int EXPIRED = 0;
+    public static final int ACTIVE = 1;
+
+    private List<Pass> passes;
+    private List<Pass> activePasses;
+    private List<Pass> expiredPasses;
+
+    private int showList;
 
     public BusPassAdapter(Context context) {
+        showList = ACTIVE;
         passes = DBHelper.fetchPasses(context);
+        splitUpPassList();
     }
 
     @Override
@@ -36,17 +46,41 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
 
     @Override
     public void onBindViewHolder(PassViewHolder holder, int position) {
-        holder.bind(passes.get(position));
+        holder.bind(currentList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return passes.size();
+        return currentList().size();
     }
 
     public void refresh(Context context) {
         passes = DBHelper.fetchPasses(context);
+        splitUpPassList();
         notifyDataSetChanged();
+    }
+
+    public void switchList(int validity) {
+        showList = validity;
+        notifyDataSetChanged();
+    }
+
+    private void splitUpPassList() {
+        Date today = Calendar.getInstance().getTime();
+
+        expiredPasses = new ArrayList<Pass>();
+        activePasses = new ArrayList<Pass>();
+        for (Pass pass : passes) {
+            if (pass.getValidTo().after(today)) {
+                activePasses.add(pass);
+            } else {
+                expiredPasses.add(pass);
+            }
+        }
+    }
+
+    private List<Pass> currentList() {
+        return showList == EXPIRED ? expiredPasses : activePasses;
     }
 
     public class PassViewHolder extends RecyclerView.ViewHolder {
@@ -65,7 +99,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         public void bind(Pass pass) {
             mTextViewPassType.setText(pass.getTypeString());
             mTextViewUserName.setText("Name: " + pass.getUser().getName());
-            mTextViewValidity.setText("Valid To:" + pass.getValidTo().getDay() + "/" + pass.getValidTo().getMonth());
+            mTextViewValidity.setText("Valid To:" + pass.getValidTo().toString());
         }
     }
 }

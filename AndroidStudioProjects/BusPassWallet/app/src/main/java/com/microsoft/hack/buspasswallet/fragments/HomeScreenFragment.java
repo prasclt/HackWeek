@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.microsoft.hack.buspasswallet.Controller;
@@ -31,6 +33,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
     private BusPassAdapter mBusPassAdapter;
+    private Switch mSwitchValidity;
 
 
     @Override
@@ -46,10 +49,22 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
+        getActivity().setTitle(getActivity().getString(R.string.title_homescreen));
+
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        mSwitchValidity = (Switch) rootView.findViewById(R.id.switchValidity);
+        mSwitchValidity.setChecked(true);
+        mBusPassAdapter.switchList(BusPassAdapter.ACTIVE);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewPasses);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mBusPassAdapter);
+
+        mSwitchValidity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mBusPassAdapter.switchList(isChecked ? BusPassAdapter.ACTIVE : BusPassAdapter.EXPIRED);
+            }
+        });
 
         return rootView;
     }
