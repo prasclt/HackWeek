@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.R;
-import com.microsoft.hack.buspasswallet.models.Pass;
+import com.microsoft.hack.buspasswallet.database.Pass;
 
 /**
  * Created by prmeno on 7/15/2016.

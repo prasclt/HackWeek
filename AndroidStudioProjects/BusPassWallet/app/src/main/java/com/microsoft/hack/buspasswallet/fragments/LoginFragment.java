@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //TODO - login logic & animation
-        mController.onLoginSuccess(Helper.dummyUser());
+        mController.onLoginSuccess(Helper.dummyUser(getContext()));
     }
 
     public static LoginFragment instantiate(Controller controller) {

@@ -1,19 +1,20 @@
 package com.microsoft.hack.buspasswallet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.microsoft.hack.buspasswallet.database.DaoSession;
+import com.microsoft.hack.buspasswallet.database.Pass;
+import com.microsoft.hack.buspasswallet.database.PassDao;
+import com.microsoft.hack.buspasswallet.database.User;
 import com.microsoft.hack.buspasswallet.fragments.HomeScreenFragment;
 import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
 import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
 import com.microsoft.hack.buspasswallet.fragments.PurchaseFragment;
 import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
-import com.microsoft.hack.buspasswallet.models.Pass;
-import com.microsoft.hack.buspasswallet.models.User;
 
 /**
  * Created by prmeno on 7/7/2016.
@@ -51,9 +52,8 @@ public class Controller {
     }
 
     public void purchaseSuccess(int passType) {
-        //TODO pras insert to DB
         Pass newPass = Pass.generatePassFromNow(loggedInUser, passType);
-        Toast.makeText((Activity) mFragmentLoaderActivity, "Pass valid to : " + newPass.getValidTo().toString(), Toast.LENGTH_LONG).show();
+        DBHelper.insertIntoDB(newPass, (Activity) mFragmentLoaderActivity);
         ((Activity) mFragmentLoaderActivity).onBackPressed();
     }
 

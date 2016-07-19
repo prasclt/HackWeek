@@ -1,15 +1,22 @@
 package com.microsoft.hack.buspasswallet.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.microsoft.hack.buspasswallet.Controller;
+import com.microsoft.hack.buspasswallet.DBHelper;
 import com.microsoft.hack.buspasswallet.R;
 
 /**
@@ -21,6 +28,14 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mDBInsertionListener, new IntentFilter(DBHelper.EVENT_PASS_INSERTED_TO_DB));
+    }
 
     @Nullable
     @Override
@@ -41,6 +56,12 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDBInsertionListener);
+    }
+
+    @Override
     public void onClick(View v) {
         mController.purchasePass();
     }
@@ -51,4 +72,11 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
         return homeScreenFragment;
     }
+
+    private BroadcastReceiver mDBInsertionListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(getContext(), "DB Insertion done", Toast.LENGTH_LONG).show();
+        }
+    };
 }
