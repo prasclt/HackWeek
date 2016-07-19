@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.DBHelper;
 import com.microsoft.hack.buspasswallet.R;
+import com.microsoft.hack.buspasswallet.adapters.BusPassAdapter;
 
 /**
  * Created by prmeno on 7/13/2016.
@@ -28,12 +30,14 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
+    private BusPassAdapter mBusPassAdapter;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBusPassAdapter = new BusPassAdapter(getContext());
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mDBInsertionListener, new IntentFilter(DBHelper.EVENT_PASS_INSERTED_TO_DB));
     }
 
@@ -44,6 +48,8 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewPasses);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mBusPassAdapter);
 
         return rootView;
     }
@@ -77,6 +83,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
         @Override
         public void onReceive(Context context, Intent intent) {
             Toast.makeText(getContext(), "DB Insertion done", Toast.LENGTH_LONG).show();
+            mBusPassAdapter.refresh(getContext());
         }
     };
 }

@@ -32,11 +32,14 @@ public class DBHelper {
 
     }
 
-    /*public static List<Pass> fetchPasses() {
+    public static List<Pass> fetchPasses(Context context) {
+        DaoSession daoSession = Helper.getDaoSession(context);
+        PassDao passDao = daoSession.getPassDao();
 
+        return passDao.loadAll();
     }
 
-    public static List<User> fetchUsers() {
+    /*public static List<User> fetchUsers() {
 
     }*/
 
