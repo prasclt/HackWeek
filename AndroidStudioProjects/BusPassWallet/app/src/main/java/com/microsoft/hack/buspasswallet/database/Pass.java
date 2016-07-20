@@ -191,10 +191,19 @@ public class Pass {
             case AC_MONTHLY:
             case NORMAL_MONTHLY:
                 c.add(Calendar.MONTH, 1);
+                c.set(Calendar.DAY_OF_MONTH, 1);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
                 break;
             case AC_DAILY:
             case NORMAL_DAILY:
                 c.add(Calendar.DATE, 1);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
                 break;
         }
 
@@ -214,6 +223,12 @@ public class Pass {
         }
 
         return "Invalid Pass";
+    }
+
+    public boolean expired() {
+        Calendar c = Calendar.getInstance();
+
+        return c.getTime().after(validTo) ? true : false;
     }
 
     public static Pass generatePassFromNow(User user, int passType) {

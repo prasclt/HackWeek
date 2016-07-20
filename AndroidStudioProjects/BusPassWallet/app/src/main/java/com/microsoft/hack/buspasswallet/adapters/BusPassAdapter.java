@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.zxing.qrcode.encoder.QRCode;
+import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.DBHelper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
@@ -29,9 +32,12 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
     private List<Pass> activePasses;
     private List<Pass> expiredPasses;
 
+    private Controller mController;
+
     private int showList;
 
-    public BusPassAdapter(Context context) {
+    public BusPassAdapter(Context context, Controller controller) {
+        mController = controller;
         showList = ACTIVE;
         passes = DBHelper.fetchPasses(context);
         splitUpPassList();
@@ -71,7 +77,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         expiredPasses = new ArrayList<Pass>();
         activePasses = new ArrayList<Pass>();
         for (Pass pass : passes) {
-            if (pass.getValidTo().after(today)) {
+            if (!pass.expired()) {
                 activePasses.add(pass);
             } else {
                 expiredPasses.add(pass);
@@ -83,14 +89,17 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         return showList == EXPIRED ? expiredPasses : activePasses;
     }
 
-    public class PassViewHolder extends RecyclerView.ViewHolder {
+    public class PassViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextViewPassType;
         private TextView mTextViewUserName;
         private TextView mTextViewValidity;
 
+        private Pass pass;
+
         public PassViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
             mTextViewPassType = (TextView) itemView.findViewById(R.id.textViewPassType);
             mTextViewUserName = (TextView) itemView.findViewById(R.id.textViewUserName);
             mTextViewValidity = (TextView) itemView.findViewById(R.id.textViewValidity);
@@ -100,6 +109,17 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
             mTextViewPassType.setText(pass.getTypeString());
             mTextViewUserName.setText("Name: " + pass.getUser().getName());
             mTextViewValidity.setText("Valid To:" + pass.getValidTo().toString());
+            this.pass = pass;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (pass.expired()) {
+                Toast.makeText(v.getContext(), "This pass has expired", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mController.passOpened(pass);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.microsoft.hack.buspasswallet.database.User;
 import com.microsoft.hack.buspasswallet.fragments.HomeScreenFragment;
 import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
 import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
+import com.microsoft.hack.buspasswallet.fragments.PassQRCodeFragment;
 import com.microsoft.hack.buspasswallet.fragments.PurchaseFragment;
 import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
 
@@ -59,5 +60,9 @@ public class Controller {
 
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public void passOpened(Pass pass) {
+        mFragmentLoaderActivity.loadFragment(PassQRCodeFragment.instantiate(pass), true);
     }
 }

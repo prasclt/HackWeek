@@ -40,7 +40,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBusPassAdapter = new BusPassAdapter(getContext());
+        mBusPassAdapter = new BusPassAdapter(getContext(), mController);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mDBInsertionListener, new IntentFilter(DBHelper.EVENT_PASS_INSERTED_TO_DB));
     }
 
