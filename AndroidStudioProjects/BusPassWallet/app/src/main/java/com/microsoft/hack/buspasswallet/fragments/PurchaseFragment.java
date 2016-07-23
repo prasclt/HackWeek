@@ -3,6 +3,7 @@ package com.microsoft.hack.buspasswallet.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.microsoft.hack.buspasswallet.Controller;
+import com.microsoft.hack.buspasswallet.PassHelper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
 
@@ -38,6 +40,8 @@ public class PurchaseFragment extends Fragment {
         mRadioGroupPassType = (RadioGroup) rootView.findViewById(R.id.radioGroupPasses);
         mRadioGroupPassType.check(R.id.radioButtonAcMonthly);
 
+        getActivity().setTitle(getActivity().getString(R.string.title_fragment_purchase_pass));
+
         return rootView;
     }
 
@@ -50,23 +54,30 @@ public class PurchaseFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mController.purchaseSuccess(passType(mRadioGroupPassType.getCheckedRadioButtonId()));
+        switch (item.getItemId()){
+            case android.R.id.home:
+                mController.onBackPressed();
+                break;
+            default:
+                mController.purchaseSuccess(passType(mRadioGroupPassType.getCheckedRadioButtonId()));
+        }
+
         return true;
     }
 
     private int passType(int radioButtonId) {
         switch (radioButtonId) {
             case R.id.radioButtonAcMonthly:
-                return Pass.AC_MONTHLY;
+                return PassHelper.AC_MONTHLY;
             case R.id.radioButtonNormalMonthly:
-                return Pass.NORMAL_MONTHLY;
+                return PassHelper.NORMAL_MONTHLY;
             case R.id.radioButtonAcDaily:
-                return Pass.AC_DAILY;
+                return PassHelper.AC_DAILY;
             case R.id.radioButtonNormalDaily:
-                return Pass.NORMAL_DAILY;
+                return PassHelper.NORMAL_DAILY;
         }
 
-        return Pass.AC_MONTHLY;
+        return PassHelper.AC_MONTHLY;
     }
 
     public static PurchaseFragment instantiate(Controller controller) {

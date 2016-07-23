@@ -14,11 +14,6 @@ import java.util.Date;
 @Entity(active = true)
 public class Pass {
 
-    public static final int AC_MONTHLY = 0;
-    public static final int NORMAL_MONTHLY = 1;
-    public static final int AC_DAILY = 2;
-    public static final int NORMAL_DAILY = 3;
-
     @Id
     private Long id;
     private java.util.Date validFrom;
@@ -59,14 +54,6 @@ public class Pass {
         this.validTo = validTo;
         this.type = type;
         this.userId = userId;
-    }
-
-    public Pass(Date validFrom, long userId, int type) {
-        this.id = null;
-        this.validFrom = validFrom;
-        this.userId = userId;
-        this.type = type;
-        setValidTo();
     }
 
     /**
@@ -183,56 +170,4 @@ public class Pass {
         myDao.refresh(this);
     }
 
-    private void setValidTo() {
-        Calendar c = Calendar.getInstance();
-        c.setTime(validFrom);
-
-        switch (type) {
-            case AC_MONTHLY:
-            case NORMAL_MONTHLY:
-                c.add(Calendar.MONTH, 1);
-                c.set(Calendar.DAY_OF_MONTH, 1);
-                c.set(Calendar.HOUR_OF_DAY, 0);
-                c.set(Calendar.MINUTE, 0);
-                c.set(Calendar.SECOND, 0);
-                c.set(Calendar.MILLISECOND, 0);
-                break;
-            case AC_DAILY:
-            case NORMAL_DAILY:
-                c.add(Calendar.DATE, 1);
-                c.set(Calendar.HOUR_OF_DAY, 0);
-                c.set(Calendar.MINUTE, 0);
-                c.set(Calendar.SECOND, 0);
-                c.set(Calendar.MILLISECOND, 0);
-                break;
-        }
-
-        validTo = c.getTime();
-    }
-
-    public String getTypeString() {
-        switch (type) {
-            case AC_MONTHLY:
-                return "AC Monthly";
-            case NORMAL_MONTHLY:
-                return "Normal Monthly";
-            case AC_DAILY:
-                return "AC Daily";
-            case NORMAL_DAILY:
-                return "Normal Daily";
-        }
-
-        return "Invalid Pass";
-    }
-
-    public boolean expired() {
-        Calendar c = Calendar.getInstance();
-
-        return c.getTime().after(validTo) ? true : false;
-    }
-
-    public static Pass generatePassFromNow(User user, int passType) {
-        Calendar c = Calendar.getInstance();
-        return new Pass(c.getTime(), user.getId(), passType);
-    }
 }

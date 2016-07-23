@@ -25,6 +25,36 @@ public class MainActivity extends AppCompatActivity implements FragmentLoaderAct
 
         mFragmentManager = getSupportFragmentManager();
         mController = new Controller(this);
+
+        setupBackStackChangeListener();
+    }
+
+    private void setupBackStackChangeListener() {
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setHomeButtonEnabled(false);
+                }
+            }
+
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -44,7 +74,14 @@ public class MainActivity extends AppCompatActivity implements FragmentLoaderAct
 
     @Override
     public void loadFragment(Fragment fragment, boolean addPreviousFragmentToBackstack) {
-        Helper.loadFragment(R.id.fragmentHolder, mFragmentManager, fragment, null, addPreviousFragmentToBackstack);
+        Helper.loadFragment(this, R.id.fragmentHolder, mFragmentManager, fragment, null, addPreviousFragmentToBackstack);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //This method is called when the up button is pressed. Just the pop back stack.
+        getSupportFragmentManager().popBackStack();
+        return true;
     }
 
     public interface LaunchableFragment {

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.zxing.qrcode.encoder.QRCode;
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.DBHelper;
+import com.microsoft.hack.buspasswallet.PassHelper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
 
@@ -77,7 +78,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         expiredPasses = new ArrayList<Pass>();
         activePasses = new ArrayList<Pass>();
         for (Pass pass : passes) {
-            if (!pass.expired()) {
+            if (!PassHelper.expired(pass)) {
                 activePasses.add(pass);
             } else {
                 expiredPasses.add(pass);
@@ -106,7 +107,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         }
 
         public void bind(Pass pass) {
-            mTextViewPassType.setText(pass.getTypeString());
+            mTextViewPassType.setText(PassHelper.getTypeString(pass.getType()));
             mTextViewUserName.setText("Name: " + pass.getUser().getName());
             mTextViewValidity.setText("Valid To:" + pass.getValidTo().toString());
             this.pass = pass;
@@ -114,7 +115,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
 
         @Override
         public void onClick(View v) {
-            if (pass.expired()) {
+            if (PassHelper.expired(pass)) {
                 Toast.makeText(v.getContext(), "This pass has expired", Toast.LENGTH_SHORT).show();
                 return;
             }

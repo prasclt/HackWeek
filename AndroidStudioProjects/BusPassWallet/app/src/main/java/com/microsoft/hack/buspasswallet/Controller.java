@@ -53,7 +53,7 @@ public class Controller {
     }
 
     public void purchaseSuccess(int passType) {
-        Pass newPass = Pass.generatePassFromNow(loggedInUser, passType);
+        Pass newPass = PassHelper.generatePassFromNow(loggedInUser, passType);
         DBHelper.insertIntoDB(newPass, (Activity) mFragmentLoaderActivity);
         ((Activity) mFragmentLoaderActivity).onBackPressed();
     }
@@ -63,6 +63,10 @@ public class Controller {
     }
 
     public void passOpened(Pass pass) {
-        mFragmentLoaderActivity.loadFragment(PassQRCodeFragment.instantiate(pass), true);
+        mFragmentLoaderActivity.loadFragment(PassQRCodeFragment.instantiate(this, pass), true);
+    }
+
+    public void onBackPressed() {
+        ((Activity) mFragmentLoaderActivity).onBackPressed();
     }
 }

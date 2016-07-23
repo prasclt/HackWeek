@@ -49,8 +49,6 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
-        getActivity().setTitle(getActivity().getString(R.string.title_homescreen));
-
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         mSwitchValidity = (Switch) rootView.findViewById(R.id.switchValidity);
         mSwitchValidity.setChecked(true);
@@ -74,6 +72,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
         super.onResume();
 
         mFab.setOnClickListener(this);
+        getActivity().setTitle(getActivity().getString(R.string.title_homescreen));
     }
 
     @Override

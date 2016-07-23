@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
 
@@ -22,6 +24,8 @@ public class PassQRCodeFragment extends Fragment {
     public static final String PASS_HEADER = "BMTC";
 
     private ImageView mImageViewQR;
+
+    private Controller mController;
     private Pass pass;
 
     @Nullable
@@ -31,6 +35,8 @@ public class PassQRCodeFragment extends Fragment {
 
         mImageViewQR = (ImageView) rootView.findViewById(R.id.imageViewQR);
         showQR();
+
+        getActivity().setTitle(getActivity().getString(R.string.title_fragment_passQR));
 
         return rootView;
     }
@@ -46,8 +52,9 @@ public class PassQRCodeFragment extends Fragment {
         mImageViewQR.setImageBitmap(QRCode.from(passQRString.toString()).bitmap());
     }
 
-    public static PassQRCodeFragment instantiate(Pass pass) {
+    public static PassQRCodeFragment instantiate(Controller controller, Pass pass) {
         PassQRCodeFragment passQRCodeFragment = new PassQRCodeFragment();
+        passQRCodeFragment.mController = controller;
         passQRCodeFragment.pass = pass;
 
         return passQRCodeFragment;

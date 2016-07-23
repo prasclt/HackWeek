@@ -1,5 +1,6 @@
 package com.microsoft.hack.buspasswallet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.microsoft.hack.buspasswallet.database.DaoMaster;
 import com.microsoft.hack.buspasswallet.database.DaoSession;
@@ -22,16 +24,21 @@ public final class Helper {
 
     public static final String DB_NAME = "buspasswallet-db";
 
-    public static void loadFragment(int containerID, FragmentManager fragmentManager, Fragment fragment, @Nullable Bundle bundle, boolean addPreviousFragmentToBackstack) {
+    public static void loadFragment(AppCompatActivity activity, int containerID, FragmentManager fragmentManager, Fragment fragment, @Nullable Bundle bundle, boolean addPreviousFragmentToBackstack) {
         if (bundle != null) {
             fragment.setArguments(bundle);
         }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(containerID, fragment);
-        if (addPreviousFragmentToBackstack)
+        if (addPreviousFragmentToBackstack) {
             fragmentTransaction.addToBackStack(null);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         fragmentTransaction.commit();
+
+
     }
 
     public static User dummyUser(Context context) {
