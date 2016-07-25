@@ -77,6 +77,10 @@ public class PassQRCodeFragment extends Fragment {
         passQRString.append(DELIMITER);
         passQRString.append(pass.getUser().getName());
         passQRString.append(DELIMITER);
+        passQRString.append(pass.getUser().getAge());
+        passQRString.append(DELIMITER);
+        passQRString.append(pass.getUser().getPhone());
+        passQRString.append(DELIMITER);
 
         mImageViewQR.setImageBitmap(QRCode.from(passQRString.toString()).bitmap());
     }

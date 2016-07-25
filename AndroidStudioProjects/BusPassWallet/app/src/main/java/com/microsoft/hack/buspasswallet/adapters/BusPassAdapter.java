@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.zxing.qrcode.encoder.QRCode;
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.DBHelper;
+import com.microsoft.hack.buspasswallet.Helper;
 import com.microsoft.hack.buspasswallet.PassHelper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
@@ -109,7 +110,7 @@ public class BusPassAdapter extends RecyclerView.Adapter<BusPassAdapter.PassView
         public void bind(Pass pass) {
             mTextViewPassType.setText(PassHelper.getTypeString(pass.getType()));
             mTextViewUserName.setText("Name: " + pass.getUser().getName());
-            mTextViewValidity.setText("Valid To:" + pass.getValidTo().toString());
+            mTextViewValidity.setText("Valid To:" + Helper.readableDate(pass.getValidTo()));
             this.pass = pass;
         }
 

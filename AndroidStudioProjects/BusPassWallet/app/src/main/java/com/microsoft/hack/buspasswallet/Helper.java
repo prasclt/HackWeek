@@ -18,6 +18,9 @@ import com.microsoft.hack.buspasswallet.database.DaoSession;
 import com.microsoft.hack.buspasswallet.database.User;
 import com.microsoft.hack.buspasswallet.database.UserDao;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by prmeno on 7/5/2016.
  */
@@ -79,5 +82,12 @@ public final class Helper {
 
     public static void showToast(Context context, String messgae) {
         Toast.makeText(context, messgae, Toast.LENGTH_LONG).show();
+    }
+
+    public static String readableDate(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+        return c.get(Calendar.DAY_OF_MONTH) + " / " + c.get(Calendar.MONTH);
     }
 }
