@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BusPassWallet.iml" filepath="$PROJECT_DIR$/BusPassWallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DaoGeneratorLibrary/DaoGeneratorLibrary.iml" filepath="$PROJECT_DIR$/DaoGeneratorLibrary/DaoGeneratorLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DaoGeneratorLibrary/com.microsoft.libraries.iml" filepath="$PROJECT_DIR$/DaoGeneratorLibrary/com.microsoft.libraries.iml" />
     </modules>
   </component>
 </project>

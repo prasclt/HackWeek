@@ -9,6 +9,7 @@ import com.microsoft.hack.buspasswallet.database.DaoSession;
 import com.microsoft.hack.buspasswallet.database.Pass;
 import com.microsoft.hack.buspasswallet.database.PassDao;
 import com.microsoft.hack.buspasswallet.database.User;
+import com.microsoft.hack.buspasswallet.database.UserDao;
 
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class DBHelper {
     }
 
     public static void insertIntoDB(User user, Context context) {
-
+        DaoSession daoSession = Helper.getDaoSession(context);
+        UserDao userDao = daoSession.getUserDao();
+        user.setId(userDao.insert(user));
     }
 
     public static List<Pass> fetchPasses(Context context) {
@@ -39,8 +42,10 @@ public class DBHelper {
         return passDao.loadAll();
     }
 
-    /*public static List<User> fetchUsers() {
+    public static List<User> fetchUsers(Context context) {
+        DaoSession daoSession = Helper.getDaoSession(context);
+        UserDao userDao = daoSession.getUserDao();
 
-    }*/
-
+        return userDao.loadAll();
+    }
 }

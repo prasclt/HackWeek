@@ -17,6 +17,9 @@ public class BusPassWalletDaoGenerator {
         user.addIdProperty();
         user.addStringProperty("name");
         user.addIntProperty("age");
+        user.addStringProperty("photoUri");
+        user.addStringProperty("phone");
+        user.addStringProperty("password");
 
         Entity pass = schema.addEntity("Pass");
         pass.addIdProperty();

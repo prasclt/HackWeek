@@ -1,5 +1,6 @@
 package com.microsoft.hack.buspasswallet.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,12 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
+import com.microsoft.hack.buspasswallet.database.User;
 
 import net.glxn.qrgen.android.QRCode;
+
+import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by prmeno on 7/21/2016.
@@ -24,6 +31,10 @@ public class PassQRCodeFragment extends Fragment {
     public static final String PASS_HEADER = "BMTC";
 
     private ImageView mImageViewQR;
+    private TextView mTextViewName;
+    private TextView mTextViewAge;
+    private TextView mTextViewPhone;
+    private CircleImageView mCircleImageViewProfilePic;
 
     private Controller mController;
     private Pass pass;
@@ -34,11 +45,29 @@ public class PassQRCodeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pass_qr, container, false);
 
         mImageViewQR = (ImageView) rootView.findViewById(R.id.imageViewQR);
+        mTextViewName = (TextView) rootView.findViewById(R.id.textViewName);
+        mTextViewAge = (TextView) rootView.findViewById(R.id.textViewAge);
+        mTextViewPhone = (TextView) rootView.findViewById(R.id.textViewPhone);
+        mCircleImageViewProfilePic = (CircleImageView) rootView.findViewById(R.id.circleImageViewProfilePic);
+
+        generateUserCard();
         showQR();
 
         getActivity().setTitle(getActivity().getString(R.string.title_fragment_passQR));
 
         return rootView;
+    }
+
+    private void generateUserCard() {
+        User user = pass.getUser();
+
+        mTextViewName.setText("Name : " + user.getName());
+        mTextViewAge.setText("Age : " + user.getAge());
+        mTextViewPhone.setText("Phone : " + user.getPhone());
+
+        if (user.getPhotoUri() != null) {
+            mCircleImageViewProfilePic.setImageURI(Uri.parse(user.getPhotoUri()));
+        }
     }
 
     private void showQR() {

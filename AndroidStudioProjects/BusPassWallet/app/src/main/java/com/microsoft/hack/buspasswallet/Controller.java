@@ -15,6 +15,7 @@ import com.microsoft.hack.buspasswallet.fragments.InitialLoadingFragment;
 import com.microsoft.hack.buspasswallet.fragments.LoginFragment;
 import com.microsoft.hack.buspasswallet.fragments.PassQRCodeFragment;
 import com.microsoft.hack.buspasswallet.fragments.PurchaseFragment;
+import com.microsoft.hack.buspasswallet.fragments.RegisterFragment;
 import com.microsoft.hack.buspasswallet.interfaces.FragmentLoaderActivity;
 
 /**
@@ -68,5 +69,14 @@ public class Controller {
 
     public void onBackPressed() {
         ((Activity) mFragmentLoaderActivity).onBackPressed();
+    }
+
+    public void onNewUserRegistered(User user) {
+        DBHelper.insertIntoDB(user, (Activity) mFragmentLoaderActivity);
+        onLoginSuccess(user);
+    }
+
+    public void onRegisterClicked() {
+        mFragmentLoaderActivity.loadFragment(RegisterFragment.instantiate(this), false);
     }
 }

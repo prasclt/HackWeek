@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMainBG"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageViewUserImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:src="@drawable/user_image_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/ItemRegisterFormStyle"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            style="@style/ItemRegisterFormStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewPhone"
+            style="@style/ItemRegisterFormStyle"
+            android:text="Phone Number" />
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            style="@style/ItemRegisterFormStyle"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewPassword"
+            style="@style/ItemRegisterFormStyle"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            style="@style/ItemRegisterFormStyle"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewAge"
+            style="@style/ItemRegisterFormStyle"
+            android:text="Age" />
+
+        <NumberPicker
+            android:id="@+id/numberPickerAge"
+            style="@style/ItemRegisterFormStyle" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonRegister"
+        style="@style/ButtonStype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Sign Up" />
+
+</LinearLayout>

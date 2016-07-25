@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.microsoft.hack.buspasswallet.database.DaoMaster;
 import com.microsoft.hack.buspasswallet.database.DaoSession;
@@ -41,20 +42,20 @@ public final class Helper {
 
     }
 
-    public static User dummyUser(Context context) {
+    /*public static User dummyUser(Context context) {
         User dummyuser;
         DaoSession daoSession = getDaoSession(context);
         UserDao userDao = daoSession.getUserDao();
 
         if (isFirstrun(context)) {
             //TODO make use of DBHelper here
-            dummyuser = new User(null, "Roger", 27);
+            dummyuser = new User(null, "Roger", 27, null, "8050609404");
             userDao.insert(dummyuser);
         } else {
             dummyuser = userDao.loadAll().get(0);
         }
         return dummyuser;
-    }
+    }*/
 
     public static DaoSession getDaoSession(Context context) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
@@ -74,5 +75,9 @@ public final class Helper {
         }
 
         return false;
+    }
+
+    public static void showToast(Context context, String messgae) {
+        Toast.makeText(context, messgae, Toast.LENGTH_LONG).show();
     }
 }
