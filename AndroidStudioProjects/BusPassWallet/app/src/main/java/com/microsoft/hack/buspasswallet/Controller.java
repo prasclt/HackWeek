@@ -33,6 +33,7 @@ public class Controller {
 
     public void onLoginSuccess(User user) {
         loggedInUser = user;
+        Helper.generateExpiredDummyPass((Context) mFragmentLoaderActivity, this);
         mFragmentLoaderActivity.loadFragment(HomeScreenFragment.instantiate(this), false);
     }
 

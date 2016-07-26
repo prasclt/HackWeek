@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.microsoft.hack.buspasswallet.Controller;
+import com.microsoft.hack.buspasswallet.Helper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.Pass;
 import com.microsoft.hack.buspasswallet.database.User;
@@ -50,6 +51,8 @@ public class PassQRCodeFragment extends Fragment {
         mTextViewPhone = (TextView) rootView.findViewById(R.id.textViewPhone);
         mCircleImageViewProfilePic = (CircleImageView) rootView.findViewById(R.id.circleImageViewProfilePic);
 
+        //Todo remove hardcoded profile pic
+        mCircleImageViewProfilePic.setImageURI(Helper.profilePicUri);
         generateUserCard();
         showQR();
 

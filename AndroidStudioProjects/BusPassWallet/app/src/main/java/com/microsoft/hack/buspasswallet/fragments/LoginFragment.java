@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mButtonLogin.setOnClickListener(this);
         mTextViewRegister.setOnClickListener(this);
 
+        setFirstUserPhoneNumber();
         return rootView;
     }
 
@@ -92,6 +93,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
         return null;
+    }
+
+    //Todo Temperory setup to show phone number entered by default
+    private void setFirstUserPhoneNumber() {
+        List<User> userList = DBHelper.fetchUsers(getContext());
+
+        if (userList == null || userList.isEmpty())
+            return;
+
+        mTextViewID.setText(userList.get(0).getPhone());
     }
 
     public static LoginFragment instantiate(Controller controller) {

@@ -1,5 +1,6 @@
 package com.microsoft.hack.buspasswallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -82,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements FragmentLoaderAct
         //This method is called when the up button is pressed. Just the pop back stack.
         getSupportFragmentManager().popBackStack();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public interface LaunchableFragment {

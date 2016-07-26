@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.microsoft.hack.buspasswallet.database.DaoMaster;
 import com.microsoft.hack.buspasswallet.database.DaoSession;
+import com.microsoft.hack.buspasswallet.database.Pass;
 import com.microsoft.hack.buspasswallet.database.User;
 import com.microsoft.hack.buspasswallet.database.UserDao;
 
@@ -27,6 +29,9 @@ import java.util.Date;
 public final class Helper {
 
     public static final String DB_NAME = "buspasswallet-db";
+    public static final int SELECT_PHOTO = 101;
+
+    public static Uri profilePicUri;
 
     public static void loadFragment(AppCompatActivity activity, int containerID, FragmentManager fragmentManager, Fragment fragment, @Nullable Bundle bundle, boolean addPreviousFragmentToBackstack) {
         if (bundle != null) {
@@ -67,6 +72,17 @@ public final class Helper {
         return daoMaster.newSession();
     }
 
+    public static void generateExpiredDummyPass(Context context, Controller controller) {
+        if (!isFirstrun(context))
+            return;
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -2);
+        Pass dummyExpiredPass = new Pass(null, c.getTime(), c.getTime(), PassHelper.AC_DAILY, controller.getLoggedInUser().getId());
+        DBHelper.insertIntoDB(dummyExpiredPass, context);
+
+    }
+
     private static boolean isFirstrun(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (!prefs.getBoolean("firstTime", false)) {
@@ -84,10 +100,10 @@ public final class Helper {
         Toast.makeText(context, messgae, Toast.LENGTH_LONG).show();
     }
 
-    public static String readableDate(Date date){
+    public static String readableDate(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-        return c.get(Calendar.DAY_OF_MONTH) + " / " + c.get(Calendar.MONTH);
+        return c.get(Calendar.DAY_OF_MONTH) + " / " + (c.get(Calendar.MONTH) + 1);
     }
 }

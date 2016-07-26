@@ -1,5 +1,10 @@
 package com.microsoft.hack.buspasswallet.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +19,9 @@ import com.microsoft.hack.buspasswallet.Controller;
 import com.microsoft.hack.buspasswallet.Helper;
 import com.microsoft.hack.buspasswallet.R;
 import com.microsoft.hack.buspasswallet.database.User;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,7 +64,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.circleImageViewUserImage:
-                //Todo Pick Image
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, Helper.SELECT_PHOTO);
                 break;
             case R.id.buttonRegister:
                 User newUser = validateInputs();
@@ -86,10 +96,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             return null;
         }
 
-        String imageUri = (String)mCircleImageViewUserImage.getTag();
+        String imageUri = (String) mCircleImageViewUserImage.getTag();
         int age = mNumberPickerAge.getValue();
 
         return new User(null, name, age, imageUri, phone, password);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Helper.SELECT_PHOTO:
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        final Uri imageUri = data.getData();
+                        mCircleImageViewUserImage.setImageURI(imageUri);
+                        Helper.profilePicUri = imageUri;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+        }
     }
 
     public static RegisterFragment instantiate(Controller controller) {
